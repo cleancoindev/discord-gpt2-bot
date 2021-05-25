@@ -2,6 +2,8 @@ import discord
 import random
 import simple_text_gen
 
+token = open("token.txt","r").read()
+
 generator = simple_text_gen.SimpleTextGen("reddit_comments.txt", 50)
 
 client = discord.Client()  # starts the discord client.
@@ -30,17 +32,15 @@ async def on_message(message):
             generator.fileFormat()
             response = open("bot_says.txt","r").read()
             print(f"{message.channel}: {message.author}: {message.author.name}: {message.content}")
-            await message.channel.send(response)
-            break
+            await message.reply(response, mention_author=False)
     if not converse and message.content.startswith("&say"):
         async with message.channel.typing():
             await message.channel.send(message.content.replace("&say ",""))
-            break
     if message.content.startswith("&convo"):
         converse = True
         channel = message.channel.id
         return
-    if converse and message.author != client.use and channel == message.channel.id:
+    if converse and message.author != client.user and channel == message.channel.id:
         if message.content.startswith("&stop"):
             converse = False
             return
@@ -49,7 +49,6 @@ async def on_message(message):
             generator.fileFormat()
             response = open("bot_says.txt","r").read()
             print(f"{message.channel}: {message.author}: {message.author.name}: {message.content}")
-            await message.channel.send(response)
-            break
+            await message.reply(response, mention_author=False)
 
 client.run(token)
