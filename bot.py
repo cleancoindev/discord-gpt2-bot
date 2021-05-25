@@ -19,15 +19,14 @@ async def on_ready():
 
 @client.event
 async def on_message(message):
-    # 10% chance of responding
-    chance = random.randrange(10)
+    chance = random.randrange(100)
     global converse, channel
     if message.content.startswith("&reset"):
         print("resetting tf session")
         generator.reset()
         await message.channel.send("Session Reset")
     # responds by chance or by summon
-    if (chance == 3 or message.content.startswith("&talk")):
+    if (chance <= 5 or message.content.startswith("&talk")):
         if message.author.bot:
             return
         async with message.channel.typing():
