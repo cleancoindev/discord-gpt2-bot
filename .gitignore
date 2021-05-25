@@ -127,3 +127,10 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+bot_says.txt
+
+# GPT2 Stuff
+/checkpoint
+/models
+/trainingData
+token.txt

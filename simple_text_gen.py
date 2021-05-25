@@ -41,7 +41,7 @@ class SimpleTextGen:
         print('Done')
 
 
-    def setupModel(self, size="124M"):
+    def setupModel(self, size="355M"):
         #create a gpt2 model based on dataset
         #first time runthrough
         gpt2.download_gpt2(model_name=size)
@@ -49,7 +49,7 @@ class SimpleTextGen:
     def trainGenerator(self, num_steps=50):
         #train the generator on a file and use our preset parameters
         session = gpt2.start_tf_sess()
-        gpt2.finetune(session, dataset=self.source, model_name='124M', steps=num_steps, restore_from='fresh', run_name='run1', sample_every=200, save_every=500, print_every=10)
+        gpt2.finetune(session, dataset=self.source, model_name='355M', steps=num_steps, restore_from='fresh', run_name='run1', sample_every=200, save_every=500, print_every=10)
 
     def loadRun(self):
         #load an existing trained run and generate from it
@@ -64,9 +64,11 @@ class SimpleTextGen:
 
     def fileFormat(self):
         #give full sentence
+        # text = open('bot_says.txt',encoding="utf-8").read()
         text = open('bot_says.txt').read()
         text.replace('"','').replace('"','').replace("“",'').replace("”",'').replace("\"","")
         split = self.tokenizer.tokenize(text)
+        # edited = open('bot_says.txt', 'w',encoding="utf-8")
         edited = open('bot_says.txt', 'w')
         ind = 1
         if len(split) < 2:
